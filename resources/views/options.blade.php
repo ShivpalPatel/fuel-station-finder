@@ -63,7 +63,7 @@
         document.getElementById('ev-stations-btn').addEventListener('click', function() {
             getUserLocation().then(function(location) {
                 // Redirect to the "Find Nearby EV Stations" page with lat and lng
-                window.location.href = `/find-nearby-ev-stations?lat=${location.lat}&lng=${location.lng}`;
+                window.location.href = `/ev-stations?lat=${location.lat}&lng=${location.lng}`;
             }).catch(function(error) {
                 alert(error);
             });

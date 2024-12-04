@@ -28,63 +28,64 @@ class EVStationController extends Controller
 
      // Book a slot
      public function bookSlot(Request $request, $slotId)
-     {
-         $slot = Slot::findOrFail($slotId);
+{
+    $slot = Slot::findOrFail($slotId);
 
-         // Validate the form inputs
-         $request->validate([
-             'car_brand' => 'required|exists:car_brands,id', // Car Brand ID validation
-             'car_model' => 'required|exists:car_models,id', // Car Model ID validation
-             'car_number' => 'required|string',
-             'units' => 'required|integer|min:1',  // Validate units
-         ]);
+    // Check if the slot is already booked
+    if ($slot->status === 'booked') {
+        return back()->with('error', 'This slot is already booked!');
+    }
 
-         // Find the car model and brand
-         $carBrand = CarModel::findOrFail($request->car_brand); // Find car brand by ID
-         $carModel = CarModel::findOrFail($request->car_model); // Find car model by ID
+    // Validate the input
+    $request->validate([
+        'car_model' => 'required|exists:car_models,id',
+        'units' => 'required|numeric|min:1',
+    ]);
 
-         // Calculate fare based on units
-         $unitRate = 100;  // Example rate per unit (e.g., per hour or km)
-         $fare = $request->units * $unitRate;
+    // Get the car model selected by the user
+    $carModel = CarModel::find($request->car_model);
+    $units = $request->units;
 
-         // Update the slot to booked status
-         $slot->update([
-             'status' => 'booked',
-             'car_model_id' => $carModel->id,
-             'car_number' => $request->car_number,
-             'units' => $request->units,  // Save units
-             'fare' => $fare,  // Save fare
-         ]);
+    // Calculate the fare (price per unit * number of units)
+    $fare = $carModel->price_per_unit * $units;
 
-         // Create a booking record with units
-         Booking::create([
-             'slot_id' => $slot->id,
-             'car_model_id' => $carModel->id,
-             'car_brand_id' => $carBrand->id,
-             'car_number' => $request->car_number,
-             'units' => $request->units,  // Store units in the booking
-             'fare' => $fare,  // Store fare in the booking
-             'status' => 'confirmed',
-         ]);
+    // Store the booking
+    $slot->status = 'booked';
+    $slot->save();
 
-         // Redirect with success message
-         return redirect()->route('ev.slots', $slot->ev_station_id)
-                          ->with('success', 'Booking Confirmed!');
-     }
+    // Create the booking entry
+    Booking::create([
+        'slot_id' => $slot->id,
+        'car_brand' => $carModel->brand,
+        'car_model' => $carModel->model,
+        'car_number' => $request->car_number,  // Assuming this input is collected as well
+        'status' => 'confirmed',
+    ]);
+
+   // Redirect to payment page with calculated fare and slot details
+   return view('payment.page', [
+    'fare' => $fare,
+    'slot' => $slot,
+    'carModel' => $carModel,
+    'carBrand' => $carModel->brand,
+    'units' => $units,
+    'carNumber' => $request->car_number
+]);
+}
 
 
-      public function confirmBooking($slotId, Request $request)
-      {
-          $slot = Slot::findOrFail($slotId);
-          $evStation = $slot->evStation;  // Get the EV Station for the slot
-          $carModels = CarModel::all(); // Get all car models
+    //   public function confirmBooking($slotId, Request $request)
+    //   {
+    //       $slot = Slot::findOrFail($slotId);
+    //       $evStation = $slot->evStation;  // Get the EV Station for the slot
+    //       $carModels = CarModel::all(); // Get all car models
 
-          // Calculate the fare (100 is an example rate per unit)
-          $unitRate = 100;  // Unit rate
-          $fare = $request->units * $unitRate; // Fare calculation
+    //       // Calculate the fare (100 is an example rate per unit)
+    //       $unitRate = 100;  // Unit rate
+    //       $fare = $request->units * $unitRate; // Fare calculation
 
-          // Return confirmation page with slot, station, car models, and calculated fare
-          return view('booking.confirm', compact('slot', 'evStation', 'carModels', 'fare'));
-      }
+    //       // Return confirmation page with slot, station, car models, and calculated fare
+    //       return view('booking.confirm', compact('slot', 'evStation', 'carModels', 'fare'));
+    //   }
 
 }

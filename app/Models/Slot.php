@@ -17,4 +17,8 @@ class Slot extends Model
     {
          return $this->belongsTo(EVStation::class, 'ev_station_id'); // Correct foreign key name    }
     }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

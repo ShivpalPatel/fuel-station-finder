@@ -48,7 +48,7 @@
             </thead>
             <tbody id="slot-list">
                 @foreach ($evStation->slots as $slot)
-                    <tr class="border-b slot-row @if ($slot->status === 'booked') bg-red-100 @else bg-green-100 @endif" data-status="{{ $slot->status }}">
+                    <tr class="border-b @if ($slot->status === 'booked') bg-red-100 @else bg-green-100 @endif">
                         <td class="px-4 py-2">{{ $slot->date }}</td>
                         <td class="px-4 py-2">{{ $slot->start_time }}</td>
                         <td class="px-4 py-2">{{ $slot->end_time }}</td>
@@ -109,23 +109,6 @@
         const bookingModal = document.getElementById('bookingModal');
         const bookingForm = document.getElementById('bookingForm');
         const closeModal = document.getElementById('closeModal');
-        const filterSelect = document.getElementById('filter');
-        const slotList = document.getElementById('slot-list');
-
-        // Handle Filter Change
-        filterSelect.addEventListener('change', function () {
-            const selectedFilter = this.value;
-            const slots = document.querySelectorAll('.slot-row');
-
-            slots.forEach(function (slot) {
-                const slotStatus = slot.getAttribute('data-status');
-                if (selectedFilter === 'all' || slotStatus === selectedFilter) {
-                    slot.style.display = '';
-                } else {
-                    slot.style.display = 'none';
-                }
-            });
-        });
 
         function openBookingModal(slotId) {
             bookingForm.action = `/slots/${slotId}/book`; // Set the form action dynamically

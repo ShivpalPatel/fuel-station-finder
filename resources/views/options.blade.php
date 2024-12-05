@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head >
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Fuel Stations or EVs</title>
@@ -9,10 +9,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50 bg-cover bg-center" style="background-image: url('{{ asset('images/test.jpg') }}');"
+>
 
     <!-- Main Content -->
-    <div class="container mx-auto p-6">
+    <div class="container mx-auto p-20">
         <!-- Heading -->
         <h2 class="text-3xl font-semibold text-center mb-6">Find Nearby Stations</h2>
 

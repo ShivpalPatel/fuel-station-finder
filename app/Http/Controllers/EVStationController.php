@@ -7,11 +7,14 @@ use App\Models\CarModel;
 use App\Models\EVStation;
 use App\Models\Slot;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Log;
+use Illuminate\Support\Facades\Log as FacadesLog;
 use Illuminate\Support\Facades\Validator;
 
 class EVStationController extends Controller
 {
-     // List EV Stations
+
+    // List EV Stations
      public function index()
      {
          $evStations = EVStation::all();
@@ -29,6 +32,9 @@ class EVStationController extends Controller
      // Book a slot
      public function bookSlot(Request $request, $slotId)
 {
+
+    // FacadesLog::info('Booking request received for slot ID: {{$slotId}}' );
+
     $slot = Slot::findOrFail($slotId);
 
     // Check if the slot is already booked
@@ -38,8 +44,9 @@ class EVStationController extends Controller
 
     // Validate the input
     $request->validate([
-        'car_model' => 'required|exists:car_models,id',
+        'car_model' => 'required',
         'units' => 'required|numeric|min:1',
+        'car_number' => 'required'
     ]);
 
     // Get the car model selected by the user
@@ -49,17 +56,20 @@ class EVStationController extends Controller
     // Calculate the fare (price per unit * number of units)
     $fare = $carModel->price_per_unit * $units;
 
-    // Store the booking
-    $slot->status = 'booked';
-    $slot->save();
+    // // Store the booking
+    // $slot->status = 'booked';
+    // $slot->save();
 
     // Create the booking entry
-    Booking::create([
+    //  dd($slotId,$carModel->brand,$carModel->model,$request->car_number,$fare,$units);
+    $booking =  Booking::create([
         'slot_id' => $slot->id,
         'car_brand' => $carModel->brand,
         'car_model' => $carModel->model,
-        'car_number' => $request->car_number,  // Assuming this input is collected as well
-        'status' => 'confirmed',
+        'car_number' => $request->car_number,
+        'status' => 'pending',
+         'fare' => $fare,
+         'units'=> $units
     ]);
 
    // Redirect to payment page with calculated fare and slot details
@@ -69,23 +79,9 @@ class EVStationController extends Controller
     'carModel' => $carModel,
     'carBrand' => $carModel->brand,
     'units' => $units,
-    'carNumber' => $request->car_number
-]);
-}
+    'carNumber' => $request->car_number,
+    'bookingId' => $booking->id, // Pass the booking ID
 
-
-    //   public function confirmBooking($slotId, Request $request)
-    //   {
-    //       $slot = Slot::findOrFail($slotId);
-    //       $evStation = $slot->evStation;  // Get the EV Station for the slot
-    //       $carModels = CarModel::all(); // Get all car models
-
-    //       // Calculate the fare (100 is an example rate per unit)
-    //       $unitRate = 100;  // Unit rate
-    //       $fare = $request->units * $unitRate; // Fare calculation
-
-    //       // Return confirmation page with slot, station, car models, and calculated fare
-    //       return view('booking.confirm', compact('slot', 'evStation', 'carModels', 'fare'));
-    //   }
-
+  ]);
+ }
 }

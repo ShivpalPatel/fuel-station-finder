@@ -39,6 +39,7 @@
                 </div>
 
                 <!-- Hidden inputs for storing the data -->
+                <input type="hidden" name="booking_id" value="{{ $bookingId }}">
                 <input type="hidden" name="slot_id" value="{{ $slot->id }}">
                 <input type="hidden" name="fare" value="{{ $fare }}">
                 <input type="hidden" name="car_number" value="{{ $carNumber }}">
@@ -50,9 +51,21 @@
                 <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
                     Proceed to Payment
                 </button>
+
             </form>
         </div>
     </div>
+    @if (session('success'))
+    <div class="bg-green-500 text-white p-3 rounded mb-4">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="bg-red-500 text-white p-3 rounded mb-4">
+        {{ session('error') }}
+    </div>
+@endif
 
 </body>
 

@@ -27,6 +27,10 @@
                     <a href="{{ route('admin.bookings.index') }}" class="block">Bookings</a>
                 </li>
                 <li class="p-3 hover:bg-blue-700">
+                    <a href="{{ route('admin.slots.options') }}" class="block">Slots</a>
+                </li>
+
+                <li class="p-3 hover:bg-blue-700">
                     <a href="{{ route('admin.options') }}" class="block">Dashboard</a>
                 </li>
             </ul>

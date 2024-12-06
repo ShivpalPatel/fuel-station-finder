@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\EVStationAdminController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\SlotController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -89,13 +91,33 @@ Route::prefix('admin/users')->name('admin.users.')->group(function () {
 
 // Bookings Management
 Route::prefix('admin/bookings')->name('admin.bookings.')->group(function () {
-    Route::get('/', [BookingController::class, 'index'])->name('index'); // List all bookings
-    Route::get('/create', [BookingController::class, 'create'])->name('create'); // Show form to create booking
-    Route::post('/', [BookingController::class, 'store'])->name('store'); // Store new booking
-    Route::get('/{id}/edit', [BookingController::class, 'edit'])->name('edit'); // Edit booking
-    Route::put('/{id}', [BookingController::class, 'update'])->name('update'); // Update booking
+    Route::get('/', action: [BookingController::class, 'index'])->name('index'); // List all bookings
     Route::delete('/{id}', [BookingController::class, 'destroy'])->name('destroy'); // Delete booking
+    // Route::get('/create', [BookingController::class, 'create'])->name('create'); // Show form to create booking
+    // Route::post('/', [BookingController::class, 'store'])->name('store'); // Store new booking
+    // Route::get('/{id}/edit', [BookingController::class, 'edit'])->name('edit'); // Edit booking
+    // Route::put('/{id}', [BookingController::class, 'update'])->name('update'); // Update booking
 });
+
+// slots management
+Route::prefix('admin/slots')->name('admin.slots.')->group(function () {
+    Route::get('/', action: [SlotController::class, 'options'])->name('options');
+    Route::get('/index', [SlotController::class, 'index'])->name('index'); // List all bookings
+
+});
+
+// Route for displaying the automatic slot generation form
+Route::get('/admin/slots/create-auto', [SlotController::class, 'createAuto'])->name('admin.slots.create.auto');
+
+// Route for generating the slots after preview
+Route::post('/admin/slots/generate', [SlotController::class, 'generateSlots'])->name('admin.slots.generate');
+
+// Route to delete old available slots
+Route::post('/admin/slots/delete-old', [SlotController::class, 'deleteOldSlots'])->name('admin.slots.delete-old');
+
+
+
+
 
 
 require __DIR__.'/auth.php';

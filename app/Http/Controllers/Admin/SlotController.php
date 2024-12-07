@@ -24,7 +24,7 @@ class SlotController extends Controller
             $query->where('status', $request->status);
         }
 
-        $slots = $query->paginate(10);  // Paginate results (10 per page)
+        $slots = $query->paginate(7);  // Paginate results (10 per page)
         return view('admin.slots.index', compact('slots'));
     }
 

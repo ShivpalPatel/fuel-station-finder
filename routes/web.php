@@ -115,7 +115,7 @@ Route::post('/admin/slots/generate', [SlotController::class, 'generateSlots'])->
 // Route to delete old available slots
 Route::post('/admin/slots/delete-old', [SlotController::class, 'deleteOldSlots'])->name('admin.slots.delete-old');
 
-
+Route::delete('/admin/slots/delete/{id}', [SlotController::class,'destroy'])->name('admin.slots.deleteSingle');
 
 
 

@@ -10,7 +10,8 @@ class CarController extends Controller
 {
     public function index()
     {
-        $carModels  = CarModel::all();
+        // $carModels  = CarModel::all();
+        $carModels  = CarModel::paginate(9);
         return view('admin.cars.index', compact('carModels'));
     }
 

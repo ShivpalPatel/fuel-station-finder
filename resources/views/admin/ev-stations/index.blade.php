@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View EV Stations</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+@section('content')
 
 <body class="bg-gray-50">
     <div class="container mx-auto p-6">
@@ -56,7 +50,7 @@
                             <td class="px-4 py-2 text-center">
                                 <!-- Edit Button -->
                                 <a href="{{ route('admin.ev-stations.edit', $station->id) }}"
-                                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg shadow-md text-sm">
+                                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg shadow-md text-sm mr-2">
                                     Edit
                                 </a>
                                 <!-- Delete Form -->
@@ -64,7 +58,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg shadow-md text-sm">
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg shadow-md text-sm ">
                                         Delete
                                     </button>
                                 </form>
@@ -79,6 +73,12 @@
                     @endforelse
                 </tbody>
             </table>
+
+            <!-- Pagination Links -->
+        <div class="mt-4 ">
+            {{ $evStations->links() }}
+        </div>
+
         </div>
     </div>
 
@@ -95,4 +95,4 @@
     </script>
 </body>
 
-</html>
+@endsection

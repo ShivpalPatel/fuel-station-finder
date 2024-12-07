@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Bookings</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+@section('content')
 
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
@@ -35,7 +29,7 @@
                         <th class="px-4 py-2 text-left">Start_time</th>
                         <th class="px-4 py-2 text-left">End_time</th>
                         <th class="px-4 py-2 text-left">Status</th>
-                        <th class="px-4 py-2 text-center">Actions</th>
+                        {{-- <th class="px-4 py-2 text-center">Actions</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +53,7 @@
                                     {{ ucfirst($booking->status) }}
                                 </span>
                             </td>
-                            <td class="px-4 py-2 text-center">
+                            {{-- <td class="px-4 py-2 text-center">
                                 <!-- Delete Button -->
                                 <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" class="inline-block">
                                     @csrf
@@ -68,7 +62,7 @@
                                         Delete
                                     </button>
                                 </form>
-                            </td>
+                            </td> --}}
                         </tr>
                     @empty
                         <tr>
@@ -79,8 +73,13 @@
                     @endforelse
                 </tbody>
             </table>
+
+            <div class='mt-6 ml-4 mr-4'>
+                {{  $bookings->links() }}
+            </div>
+
         </div>
     </div>
 </body>
 
-</html>
+@endsection

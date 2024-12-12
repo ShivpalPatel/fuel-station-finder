@@ -1,44 +1,67 @@
 <?php
 
-use App\Http\Controllers\EVStationController;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\EVStationController;
 use App\Http\Controllers\FuelStationController;
 use App\Http\Controllers\PaymentController;
-use App\Models\Booking;
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\EVStationAdminController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookingController;
+<<<<<<< Updated upstream
+=======
+use App\Http\Controllers\Admin\SlotController;
+use App\Http\Controllers\UserEVStationController;
+use Spatie\Permission\Models\Role;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+>>>>>>> Stashed changes
 
 
-// Route::get('/search-nearby-fuel-stations', [FuelStationController::class, 'searchNearby']);
-// Route to display the search page
-// Route::get('/search-nearby-fuel-stations', [FuelStationController::class, 'showSearchPage']);
 
-// // Route to fetch nearby stations (API)
-// Route::get('/api/nearby-fuel-stations', [FuelStationController::class, 'searchNearby']);
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// SuperAdmin Routes
+Route::middleware(['auth', 'role:SuperAdmin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.options');
+    })->name('admin.options');
+});
+
+// User Routes
+Route::middleware(['auth', 'role:user'])->group(function () {
+  Route::get('/user', function () {
+      return view('Useroptions');
+  })->name('options');
+});
+
+
+
+
+
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
 
 //------------------------------------------------------------
-Route::get('/', function () {
-    return view('options');
-})->name('options');
+// user actions
+
 
 Route::get('/nearby-fuel-stations', [FuelStationController::class, 'showNearbyFuelStations'])->name('findNearbyFuel');
 
@@ -51,11 +74,12 @@ Route::post('/payment/process', [PaymentController::class, 'processPayment'])->n
 Route::get('/booking/success/{booking}', [PaymentController::class, 'bookingSuccess'])->name('booking.success');
 
 
+// web.php
+Route::get('/payment/success', [PaymentController::class, 'paymentSuccess']);
+
 //===============================================================================
 // Admin Dashboard
-Route::get('/admin', function () {
-    return view('admin.options');
-})->name('admin.options');
+
 
 // EV Stations Management
 Route::prefix('admin/ev-stations')->name('admin.ev-stations.')->group(function () {
@@ -95,6 +119,22 @@ Route::prefix('admin/bookings')->name('admin.bookings.')->group(function () {
     Route::get('/{id}/edit', [BookingController::class, 'edit'])->name('edit'); // Edit booking
     Route::put('/{id}', [BookingController::class, 'update'])->name('update'); // Update booking
     Route::delete('/{id}', [BookingController::class, 'destroy'])->name('destroy'); // Delete booking
+});
+
+
+
+
+
+
+
+// user panel route
+// User Routes
+// Route::get('/profile', [ProfileController::class, 'show'])->name(name: 'profilez');
+// Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+// web.php
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/bookings', [EVStationController::class, 'userPersonalBookings'])->name('user.bookings');
 });
 
 

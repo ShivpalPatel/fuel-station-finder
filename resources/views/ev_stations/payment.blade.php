@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +9,7 @@
     <title>Payment</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <body class="bg-gray-50">
     <div class="container mx-auto p-6">

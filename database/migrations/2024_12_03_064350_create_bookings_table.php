@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('car_brand');
             $table->string('car_model');
             $table->string('car_number');
-            $table->enum('status', ['confirmed', 'canceled'])->default('confirmed');
+            $table->enum('status', ['confirmed','pending','canceled'])->default('confirmed');
             $table->timestamps();
         });
     }

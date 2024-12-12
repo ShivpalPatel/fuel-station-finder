@@ -9,7 +9,7 @@
 </head>
 
 <body class="bg-gray-50">
-    <div class="container mx-auto p-6">
+    <div class="container mx-auto p-6"  style="background-image: url('/images/tableBack.jpg');">
         <!-- Success Modal -->
         @if (session('success'))
             <div id="successModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -31,8 +31,8 @@
         </div>
 
         <!-- Table -->
-        <div class="overflow-x-auto">
-            <table class="table-auto w-full bg-white shadow-md rounded-lg">
+        <div class="overflow-x-auto" style="background-image: url('/images/tableBack.jpg');">
+            <table class="table-auto w-full bg-white shadow-md rounded-lg"  style="background-image: url('/images/tableBack.jpg');">
                 <thead class="bg-gray-200 text-gray-700">
                     <tr>
                         <th class="px-4 py-2 text-left">Brand</th>

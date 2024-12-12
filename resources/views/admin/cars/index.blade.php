@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Models Management</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+@section('content')
 
 <body class="bg-gray-50">
     <div class="container mx-auto p-6"  style="background-image: url('/images/tableBack.jpg');">
@@ -48,13 +42,13 @@
                             <td class="px-4 py-2">{{ $car->model }}</td>
                             <td class="px-4 py-2">{{ $car->price_per_unit }}</td>
                             <td class="px-4 py-2 text-center">
-                                <a href="{{ route('admin.cars.edit', $car->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg shadow-md text-sm">
+                                <a href="{{ route('admin.cars.edit', $car->id) }}" class="bg-blue-500 mr-4 hover:bg-blue-600 text-white px-3 py-2 rounded-lg shadow-md text-sm">
                                     Edit
                                 </a>
                                 <form action="{{ route('admin.cars.destroy', $car->id) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg shadow-md text-sm">
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 ml-2 text-white px-3 py-2 rounded-lg shadow-md text-sm">
                                         Delete
                                     </button>
                                 </form>
@@ -63,6 +57,10 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <div class="mt-6">
+                {{ $carModels->links() }}
+            </div>
         </div>
     </div>
 
@@ -82,4 +80,4 @@
     </script>
 </body>
 
-</html>
+@endsection

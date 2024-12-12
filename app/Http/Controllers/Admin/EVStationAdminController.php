@@ -12,7 +12,8 @@ class EVStationAdminController extends Controller
 
     public function index()
     {
-        $evStations = EVStation::all();
+        // $evStations = EVStation::all();
+        $evStations = EVStation::paginate(10);
         return view('admin.ev-stations.index', compact('evStations'));
     }
 

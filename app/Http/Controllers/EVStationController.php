@@ -16,7 +16,8 @@ class EVStationController extends Controller
     // List EV Stations
      public function index()
      {
-         $evStations = EVStation::all();
+        //  $evStations = EVStation::all();
+        $evStations = EVStation::paginate(11);
          return view('ev_stations.index', compact('evStations'));
      }
 

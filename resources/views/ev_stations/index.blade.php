@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.user')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EV Stations</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+@section('content')
 
 <body class="bg-gray-50">
     <div class="container mx-auto p-6">
         <h2 class="text-2xl font-semibold mb-6">EV Stations</h2>
-        <table class="table-auto w-full bg-white shadow-md rounded-lg">
+        <table class="table-auto w-full bg-white shadow-md rounded-lg" style="background-image: url('/images/tableBack.jpg');>
             <thead class="bg-gray-200 text-gray-700">
                 <tr>
                     <th class="px-4 py-2 text-left">Name</th>
@@ -33,7 +27,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-6">
+            {{ $evStations->links() }}
+        </div>
     </div>
 </body>
-
-</html>
+@endsection

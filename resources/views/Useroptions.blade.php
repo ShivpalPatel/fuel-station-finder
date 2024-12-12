@@ -2,8 +2,7 @@
 
 @section('content')
 
-    <div class= style="background-image: url('{{ asset('image/background.jpg') }}'); background-size: cover; background-position: center; height: 100vh;"
- >
+<div class="container mx-screen p-6" style="background-image: url('/images/drag.jpg');">
         <!-- Heading -->
         <h2 class="text-3xl font-semibold text-center mb-6">Find Nearby Stations</h2>
 

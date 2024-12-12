@@ -3,13 +3,13 @@
 @section('content')
    <!-- user/bookings/index.blade.php -->
 
-<div class="container mx-auto p-6">
+<div class="container mx-auto p-6" style="background-image: url('/images/tableBack.jpg');">
     <h2 class="text-2xl font-semibold mb-6 text-center">My Bookings</h2>
 
     @if($bookings->isEmpty())
         <p class="text-center text-gray-500">You have no bookings yet.</p>
     @else
-        <table class="table-auto w-full bg-white shadow-md rounded-lg">
+        <table class="table-auto w-full bg-white shadow-md rounded-lg" style="background-image: url('/images/tableBack.jpg');">
             <thead class="bg-gray-200 text-gray-700">
                 <tr>
                     <th class="px-4 py-2">Station Name</th>

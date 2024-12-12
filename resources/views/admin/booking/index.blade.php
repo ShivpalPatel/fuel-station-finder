@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-<h1>This is admin.ev-station.index</h1>
-=======
 @extends('layouts.admin')
 
 @section('content')
@@ -65,4 +62,3 @@
         </div>
     </div>
 @endsection
->>>>>>> Stashed changes

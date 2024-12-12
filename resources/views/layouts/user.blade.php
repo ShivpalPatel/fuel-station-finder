@@ -12,10 +12,15 @@
     <div class="min-h-screen flex" >
 
         <!-- Sidebar -->
-        <aside class="w-64 bg-blue-600 text-white p-6">
+        <aside class="w-64 bg-blue-600 text-white p-6" style="background-image: url('/images/pan3.jpg');">
             <div class="text-center font-bold text-xl mb-8">User Panel</div>
             <nav>
                 <ul class="space-y-4">
+
+                    <li class="p-3 rounded-lg hover:bg-blue-700 transition duration-300">
+                        <a href="{{ route('dashboard') }}" class="block">Dashboard</a>
+                    </li>
+
                     <li class="p-3 rounded-lg hover:bg-blue-700 transition duration-300">
                         <a href="{{ route('profile.edit') }}" class="block">Profile</a>
                     </li>

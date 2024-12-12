@@ -12,13 +12,10 @@ use App\Http\Controllers\Admin\EVStationAdminController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookingController;
-<<<<<<< Updated upstream
-=======
 use App\Http\Controllers\Admin\SlotController;
 use App\Http\Controllers\UserEVStationController;
 use Spatie\Permission\Models\Role;
 
->>>>>>> Stashed changes
 
 
 
@@ -136,6 +133,22 @@ Route::prefix('admin/bookings')->name('admin.bookings.')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/bookings', [EVStationController::class, 'userPersonalBookings'])->name('user.bookings');
 });
+// slots management
+Route::prefix('admin/slots')->name('admin.slots.')->group(function () {
+    Route::get('/', action: [SlotController::class, 'options'])->name('options');
+    Route::get('/index', [SlotController::class, 'index'])->name('index'); // List all bookings
 
+});
+
+// Route for displaying the automatic slot generation form
+Route::get('/admin/slots/create-auto', [SlotController::class, 'createAuto'])->name('admin.slots.create.auto');
+
+// Route for generating the slots after preview
+Route::post('/admin/slots/generate', [SlotController::class, 'generateSlots'])->name('admin.slots.generate');
+
+// Route to delete old available slots
+Route::post('/admin/slots/delete-old', [SlotController::class, 'deleteOldSlots'])->name('admin.slots.delete-old');
+
+Route::delete('/admin/slots/delete/{id}', [SlotController::class,'destroy'])->name('admin.slots.deleteSingle');
 
 require __DIR__.'/auth.php';

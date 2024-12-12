@@ -30,9 +30,7 @@
                     <a href="{{ route('admin.bookings.index') }}" class="block">Bookings</a>
                 </li>
                 <li class="p-3 hover:bg-blue-700">
-<<<<<<< Updated upstream
-                    <a href="{{ route('admin.options') }}" class="block">Dashboard</a>
-=======
+                    {{-- <a href="{{ route('admin.options') }}" class="block">Dashboard</a> --}}
                     <a href="{{ route('admin.slots.options') }}" class="block">Slots</a>
                 </li>
 
@@ -45,7 +43,6 @@
                         @csrf
                         <button type="submit" class="block w-full text-left">Logout</button>
                     </form>
->>>>>>> Stashed changes
                 </li>
             </ul>
         </nav>

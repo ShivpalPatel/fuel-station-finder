@@ -1,4 +1,58 @@
-<x-guest-layout>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-cover bg-center" style="background-image: url('https://img.freepik.com/premium-photo/new-gas-station-design-featuring-red-sports-car-parked-front-daylight-hours_1234078-4581.jpg?w=740');">
+    <div class="flex items-center justify-center min-h-screen bg-gray-900 bg-opacity-75">
+        <div class=" rounded-lg shadow-lg p-8 w-full max-w-md">
+            <h1 class="text-2xl font-bold text-center text-white mb-6">Login</h1>
+            <!-- Login Form -->
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-white">Email</label>
+                    <input id="email" type="email" name="email" required
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium text-white">Password</label>
+                    <input id="password" type="password" name="password" required
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="flex items-center justify-between mb-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="remember" class="h-4 w-4 text-blue-600">
+                        <span class="ml-2 text-sm text-white">Remember me</span>
+                    </label>
+                    <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
+                </div>
+                <button type="submit"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-md font-semibold">
+                    Login
+                </button>
+            </form>
+            <div class="mt-6 text-center text-sm text-white">
+                Don't have an account? <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Register</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+{{-- <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -44,4 +98,4 @@
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+</x-guest-layout> --}}

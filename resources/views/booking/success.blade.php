@@ -19,11 +19,13 @@
         <div class="bg-white p-6 shadow-md rounded-lg">
             <h3 class="text-lg font-semibold mb-4">Booking Details</h3>
             <p><strong>EV Station:</strong> {{ $booking->slot->evStation->name }}</p>
+
             <p><strong>Slot Time:</strong> {{ $booking->slot->start_time }} - {{ $booking->slot->end_time }}</p>
             <p><strong>Car:</strong> {{ $booking->car_brand }} - {{ $booking->car_model }}</p>
             <p><strong>Car Number:</strong> {{ $booking->car_number }}</p>
             <p><strong>Total Units:</strong> {{ $booking->units ?? 'N/A' }}</p>
             <p><strong>Total Fare:</strong> ₹{{ number_format($booking->fare, 2) }}</p>
+            <p><strong>Payment ID:</strong> {{ $booking->payment_id }}</p>
         </div>
 
         <!-- Return Button -->

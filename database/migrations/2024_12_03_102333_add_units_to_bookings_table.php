@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->integer('units')->default(1);
+            $table->integer('units');
         });
     }
 

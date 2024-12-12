@@ -16,11 +16,17 @@ class Booking extends Model
         'car_number',
         'units',    // Make sure 'units' is included
         'status',
-        'fare'      // Make sure 'fare' is included
+        'fare' ,     // Make sure 'fare' is included
+         'user_id'
     ];
     // Relationship with Slot
     public function slot()
     {
         return $this->belongsTo(Slot::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

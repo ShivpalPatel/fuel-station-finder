@@ -7,9 +7,8 @@ use App\Models\CarModel;
 use App\Models\EVStation;
 use App\Models\Slot;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Log;
-use Illuminate\Support\Facades\Log as FacadesLog;
-use Illuminate\Support\Facades\Validator;
+use Razorpay\Api\Api;
+
 
 class EVStationController extends Controller
 {
@@ -32,9 +31,6 @@ class EVStationController extends Controller
      // Book a slot
      public function bookSlot(Request $request, $slotId)
 {
-
-    // FacadesLog::info('Booking request received for slot ID: {{$slotId}}' );
-
     $slot = Slot::findOrFail($slotId);
 
     // Check if the slot is already booked
@@ -56,14 +52,9 @@ class EVStationController extends Controller
     // Calculate the fare (price per unit * number of units)
     $fare = $carModel->price_per_unit * $units;
 
-    // // Store the booking
-    // $slot->status = 'booked';
-    // $slot->save();
-
-    // Create the booking entry
-    //  dd($slotId,$carModel->brand,$carModel->model,$request->car_number,$fare,$units);
-    $booking =  Booking::create([
+     $booking =  Booking::create([
         'slot_id' => $slot->id,
+        'user_id' => auth()->id(), // Assign the logged-in user's ID
         'car_brand' => $carModel->brand,
         'car_model' => $carModel->model,
         'car_number' => $request->car_number,
@@ -72,16 +63,54 @@ class EVStationController extends Controller
          'units'=> $units
     ]);
 
-   // Redirect to payment page with calculated fare and slot details
-   return view('payment.page', [
-    'fare' => $fare,
-    'slot' => $slot,
-    'carModel' => $carModel,
-    'carBrand' => $carModel->brand,
-    'units' => $units,
-    'carNumber' => $request->car_number,
-    'bookingId' => $booking->id, // Pass the booking ID
 
-  ]);
+    // Initialize Razorpay API
+    $api = new Api(env('RAZORPAY_KEY_ID'), env('RAZORPAY_KEY_SECRET'));
+
+    // Create Razorpay order
+    $orderData = [
+        'receipt'         => 'order_rcptid_' . $booking->id,
+        'amount'          => $fare * 100, // Amount in paise
+        'currency'        => 'INR',
+        'payment_capture' => 1 // Auto capture
+    ];
+
+    $razorpayOrder = $api->order->create($orderData);
+    // dd(vars: env('RAZORPAY_KEY_ID'), env('RAZORPAY_KEY_SECRET'));
+
+    // Pass order ID to the view
+    return view('payment.page', [
+        'fare' => $fare,
+        'slot' => $slot,
+        'carModel' => $carModel,
+        'carBrand' => $carModel->brand,
+        'units' => $units,
+        'carNumber' => $request->car_number,
+        'bookingId' => $booking->id,
+        'order_id' => $razorpayOrder['id'], // Pass the Razorpay order ID
+        'razorpay_key' => env('RAZORPAY_KEY_ID'), // Pass the Razorpay Key to Blade
+    ]);
+
+    // before razpr pay
+    // // Redirect to payment page with calculated fare and slot details
+    //  return view('payment.page', [
+    // 'fare' => $fare,
+    // 'slot' => $slot,
+    // 'carModel' => $carModel,
+    // 'carBrand' => $carModel->brand,
+    // 'units' => $units,
+    // 'carNumber' => $request->car_number,
+    // 'bookingId' => $booking->id, // Pass the booking ID
+
+    //  ]);
+ }
+
+ // user personal bookings
+ public function userPersonalBookings()
+ {
+    $user = auth()->user(); // Get the currently logged-in user
+    $bookings = Booking::where('user_id', $user->id)->with('slot.evStation')->paginate(10);
+
+    return view('user.bookings', compact('bookings'));
  }
 }

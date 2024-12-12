@@ -1,4 +1,42 @@
 <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Station Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-cover bg-center" style="background-image: url('https://w.wallhaven.cc/full/eo/wallhaven-eojxml.jpg');">
+    <!-- Top Navigation -->
+    <div class="absolute top-5 left-0 w-full bg-opacity-70 text-white py-4 px-8 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Fuel & EV Station Finder</h1>
+        <div>
+            <a href="{{ route('login') }}" class="mr-4  bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Login</a>
+            <a href="{{ route('register') }}" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md">Register</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen flex flex-col  justify-center text-violet-200 text-center bg-gray-900 bg-opacity-20">
+        <h2 class="text-4xl font-bold mb-6 text-left ml-8">Welcome to the Fuel & EV Station Finder</h2>
+        <p class="text-lg mb-4 max-w-3xl">Our platform allows you to locate nearby fuel stations and book EV charging slots seamlessly. Explore the convenience of a smarter way to power your journey.</p>
+        <p class="text-lg max-w-3xl">From finding reliable fuel stops to scheduling EV charging sessions, we are here to make your travels hassle-free.</p>
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -173,4 +211,4 @@
             </div>
         </div>
     </body>
-</html>
+</html> --}}
